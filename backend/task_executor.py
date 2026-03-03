@@ -84,7 +84,9 @@ import os
 
 
 def execute_task_local(task: dict) -> dict:
+    print(f"[DEBUG] Starting task: {task['name']}, cmd: {task['cmd']}")
     execution_id = create_execution_record(task)
+    print(f"[DEBUG] Created execution record: {execution_id}")
     start_time = datetime.now()
     timeout = task.get("timeout", CMD_TIMEOUT)
     
@@ -108,6 +110,7 @@ def execute_task_local(task: dict) -> dict:
         status = "success" if result.returncode == 0 else "error"
         
         update_execution_record(execution_id, status, output, duration_str)
+        print(f"[DEBUG] Updated execution record: {execution_id}, status: {status}")
         
         return {
             "id": execution_id,
