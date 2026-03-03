@@ -28,3 +28,12 @@ Thumbs.db
 # Data files
 tasks.json
 execution_history.json
+
+# Docker
+data/
+logs/
+ssl/
+
+# Build
+frontend/dist/
+*.log
