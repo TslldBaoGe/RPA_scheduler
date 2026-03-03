@@ -482,7 +482,7 @@ onUnmounted(() => {
       v-model="dialogVisible"
       width="500px"
     >
-      <el-form :model="taskForm" :rules="rules" ref="formRef" label-width="80px">
+      <el-form :model="taskForm" :rules="rules" ref="formRef" label-width="100px">
         <el-form-item label="任务名称" prop="name">
           <el-input v-model="taskForm.name" placeholder="请输入任务名称" />
         </el-form-item>
