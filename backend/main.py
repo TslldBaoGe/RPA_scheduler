@@ -539,6 +539,14 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     task_name = task["name"] if task else f"Task-{task_id}"
                     task_cmd = task["cmd"] if task else result.get("cmd", "")
                     
+                    # 构建输出信息
+                    if result.get("status") == "error" and result.get("error"):
+                        # 执行出错（如超时）
+                        output = f"Error: {result.get('error')}\n\nReturn code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
+                    else:
+                        # 正常执行
+                        output = f"Return code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
+                    
                     # 保存执行历史
                     history = load_history()
                     history.insert(0, {
@@ -548,14 +556,14 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                         "cmd": task_cmd,
                         "executionTime": result.get("execution_time", datetime.now().isoformat()),
                         "status": result.get("status", "unknown"),
-                        "output": f"Return code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}",
+                        "output": output,
                         "agentId": message.get("agent_id")
                     })
                     if len(history) > 100:
                         history = history[:100]
                     save_history(history)
                     
-                    print(f"[Agent] Execution result received for task {task_id}")
+                    print(f"[Agent] Execution result received for task {task_id}, status: {result.get('status')}")
                 
                 elif msg_type == "pong":
                     # 心跳响应
