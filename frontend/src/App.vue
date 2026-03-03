@@ -400,7 +400,7 @@ onUnmounted(() => {
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="执行Agent" min-width="120">
+      <el-table-column label="执行Agent" min-width="150">
         <template #default="{ row }">
           <el-tooltip v-if="row.agentId" :content="agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId" placement="top">
             <span class="ellipsis-text">{{ agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId }}</span>
@@ -432,21 +432,34 @@ onUnmounted(() => {
           {{ getNextExecution(row.cronExpression) }}
         </template>
       </el-table-column>
-      <el-table-column label="最近5次执行" width="280">
+      <el-table-column label="最近5次执行" width="120">
         <template #default="{ row }">
-          <div class="recent-executions">
-            <div v-for="(exec, index) in getTaskRecentExecutions(row.id, 5)" :key="index" class="execution-item">
-              <el-tag 
-                :type="exec.status === 'success' ? 'success' : exec.status === 'running' ? 'warning' : 'danger'" 
-                size="small" 
-                class="execution-tag"
-              >
-                {{ exec.status === 'success' ? '✓' : exec.status === 'running' ? '◐' : '✗' }}
-              </el-tag>
-              <span class="execution-time">{{ formatDate(new Date(exec.executionTime)) }}</span>
+          <el-tooltip placement="top">
+            <template #content>
+              <div v-for="(exec, index) in getTaskRecentExecutions(row.id, 5)" :key="index" style="margin: 4px 0;">
+                <span :style="{ color: exec.status === 'success' ? '#67c23a' : exec.status === 'running' ? '#e6a23c' : '#f56c6c' }">
+                  {{ exec.status === 'success' ? '✓' : exec.status === 'running' ? '◐' : '✗' }}
+                </span>
+                {{ formatDate(new Date(exec.executionTime)) }}
+                <span v-if="exec.duration" style="color: #909399; margin-left: 8px;">({{ exec.duration }})</span>
+              </div>
+              <div v-if="getTaskRecentExecutions(row.id, 5).length === 0" style="color: #909399;">暂无执行记录</div>
+            </template>
+            <div class="recent-executions">
+              <div v-for="(exec, index) in getTaskRecentExecutions(row.id, 5).slice(0, 2)" :key="index" class="execution-item">
+                <el-tag 
+                  :type="exec.status === 'success' ? 'success' : exec.status === 'running' ? 'warning' : 'danger'" 
+                  size="small" 
+                  class="execution-tag"
+                >
+                  {{ exec.status === 'success' ? '✓' : exec.status === 'running' ? '◐' : '✗' }}
+                </el-tag>
+                <span class="execution-time">{{ formatDate(new Date(exec.executionTime)) }}</span>
+              </div>
+              <span v-if="getTaskRecentExecutions(row.id, 5).length === 0" style="color: #999; font-size: 12px;">暂无执行记录</span>
+              <span v-else-if="getTaskRecentExecutions(row.id, 5).length > 2" style="color: #409eff; font-size: 12px; cursor: pointer;">+{{ getTaskRecentExecutions(row.id, 5).length - 2 }}条</span>
             </div>
-            <span v-if="getTaskRecentExecutions(row.id, 5).length === 0" style="color: #999; font-size: 12px;">暂无执行记录</span>
-          </div>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column label="状态" width="100">
@@ -487,7 +500,7 @@ onUnmounted(() => {
     <h2>执行历史</h2>
     <el-table :data="paginatedHistory" style="width: 100%">
       <el-table-column prop="taskName" label="任务名称" width="160" />
-      <el-table-column label="执行Agent" width="120">
+      <el-table-column label="执行Agent" width="150">
         <template #default="{ row }">
           <el-tooltip v-if="row.agentId" :content="agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId" placement="top">
             <span class="ellipsis-text">{{ agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId }}</span>
