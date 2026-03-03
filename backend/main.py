@@ -111,14 +111,12 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     
     except WebSocketDisconnect:
         pass
+    except Exception as e:
+        print(f"[Agent] WebSocket error: {e}")
     finally:
         if agent_id:
             manager.disconnect(agent_id)
             print(f"[Agent] Disconnected: {agent_id}")
-    except Exception as e:
-        print(f"[Agent] WebSocket error: {e}")
-        if agent_id:
-            manager.disconnect(agent_id)
 
 
 @app.on_event("shutdown")
