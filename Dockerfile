@@ -1,5 +1,5 @@
-# 使用 Python 3.12.12 作为基础镜像（使用阿里云镜像）
-FROM registry.cn-hangzhou.aliyuncs.com/library/python:3.12.12-slim
+# 使用 Python 3.12.12 作为基础镜像（使用 Docker 官方镜像）
+FROM python:3.12.12-slim
 
 # 设置工作目录
 WORKDIR /app

@@ -37,7 +37,26 @@ docker --version
 docker-compose --version
 ```
 
-**注意**：如果 Docker 拉取镜像很慢，可以自行配置镜像加速器
+**注意**：如果 Docker 拉取镜像很慢，可以在服务器上配置镜像加速器：
+
+```bash
+# 创建 Docker 配置文件
+sudo mkdir -p /etc/docker
+
+# 写入镜像加速配置（使用多个镜像源）
+sudo tee /etc/docker/daemon.json > /dev/null <<'JSONEOF'
+{
+  "registry-mirrors": [
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://hub-mirror.c.163.com"
+  ]
+}
+JSONEOF
+
+# 重启 Docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
 ```
 
 ### 2. 克隆代码
