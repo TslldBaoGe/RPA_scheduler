@@ -42,10 +42,13 @@ class Agent(BaseModel):
     connected_at: str
     last_ping: str
 
+# 数据目录
+DATA_DIR = os.environ.get("DATA_DIR", "/app/data")
+
 # 任务存储文件
-TASKS_FILE = "tasks.json"
-HISTORY_FILE = "execution_history.json"
-AGENTS_FILE = "agents.json"  # Agent 存储文件
+TASKS_FILE = os.path.join(DATA_DIR, "tasks.json")
+HISTORY_FILE = os.path.join(DATA_DIR, "execution_history.json")
+AGENTS_FILE = os.path.join(DATA_DIR, "agents.json")  # Agent 存储文件
 
 # 命令执行超时时间（秒）
 CMD_TIMEOUT = 300  # 默认 5 分钟

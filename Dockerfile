@@ -5,6 +5,9 @@ FROM m.daocloud.io/docker.io/library/python:3.12.12-slim
 # 设置工作目录
 WORKDIR /app
 
+# 创建数据目录
+RUN mkdir -p /app/data /app/logs
+
 # 安装系统依赖（使用国内镜像源加速 apt）
 RUN if [ -f /etc/apt/sources.list.d/debian.sources ]; then \
         sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources; \
