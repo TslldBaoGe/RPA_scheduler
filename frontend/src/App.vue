@@ -206,6 +206,23 @@ const getTaskRecentExecutions = (taskId, count = 5) => {
     .slice(0, count)
 }
 
+// 获取任务当前状态
+const getTaskCurrentStatus = (taskId) => {
+  const recentExecutions = getTaskRecentExecutions(taskId, 1)
+  if (recentExecutions.length === 0) {
+    return { text: '待执行', type: 'info' }
+  }
+  
+  const latest = recentExecutions[0]
+  if (latest.status === 'running') {
+    return { text: '执行中', type: 'warning' }
+  } else if (latest.status === 'success') {
+    return { text: '成功', type: 'success' }
+  } else {
+    return { text: '失败', type: 'danger' }
+  }
+}
+
 // 加载任务
 const loadTasks = async () => {
   tasks.value = await api.getTasks()
@@ -411,8 +428,12 @@ onUnmounted(() => {
         <template #default="{ row }">
           <div class="recent-executions">
             <div v-for="(exec, index) in getTaskRecentExecutions(row.id, 5)" :key="index" class="execution-item">
-              <el-tag :type="exec.status === 'success' ? 'success' : 'danger'" size="small" class="execution-tag">
-                {{ exec.status === 'success' ? '✓' : '✗' }}
+              <el-tag 
+                :type="exec.status === 'success' ? 'success' : exec.status === 'running' ? 'warning' : 'danger'" 
+                size="small" 
+                class="execution-tag"
+              >
+                {{ exec.status === 'success' ? '✓' : exec.status === 'running' ? '◐' : '✗' }}
               </el-tag>
               <span class="execution-time">{{ formatDate(new Date(exec.executionTime)).split(' ')[1] }}</span>
             </div>
@@ -420,10 +441,10 @@ onUnmounted(() => {
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="80">
+      <el-table-column label="状态" width="100">
         <template #default="{ row }">
-          <el-tag :type="taskStatus[row.id]?.status === 'success' ? 'success' : taskStatus[row.id]?.status === 'error' ? 'danger' : 'info'">
-            {{ taskStatus[row.id]?.status || '待执行' }}
+          <el-tag :type="getTaskCurrentStatus(row.id).type">
+            {{ getTaskCurrentStatus(row.id).text }}
           </el-tag>
         </template>
       </el-table-column>
@@ -480,10 +501,10 @@ onUnmounted(() => {
           <span v-else style="color: #999;">-</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="80">
+      <el-table-column label="状态" width="100">
         <template #default="{ row }">
-          <el-tag :type="row.status === 'success' ? 'success' : 'danger'">
-            {{ row.status === 'success' ? '成功' : '失败' }}
+          <el-tag :type="row.status === 'success' ? 'success' : row.status === 'running' ? 'warning' : 'danger'">
+            {{ row.status === 'success' ? '成功' : row.status === 'running' ? '执行中' : '失败' }}
           </el-tag>
         </template>
       </el-table-column>

@@ -147,6 +147,50 @@ def save_history(history):
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(history, f, indent=2, ensure_ascii=False)
 
+# 生成唯一执行ID
+import uuid
+def generate_execution_id():
+    return str(uuid.uuid4())
+
+# 创建执行记录
+def create_execution_record(task, agent_id=None):
+    """创建执行中状态的历史记录"""
+    execution_id = generate_execution_id()
+    record = {
+        "id": execution_id,
+        "taskId": task["id"],
+        "taskName": task["name"],
+        "cmd": task["cmd"],
+        "executionTime": datetime.now().isoformat(),
+        "status": "running",
+        "output": "任务正在执行中...",
+        "agentId": agent_id,
+        "duration": None
+    }
+    
+    # 添加到执行历史
+    history = load_history()
+    history.insert(0, record)
+    if len(history) > 100:
+        history = history[:100]
+    save_history(history)
+    
+    return execution_id
+
+# 更新执行记录
+def update_execution_record(execution_id, status, output, duration=None):
+    """更新执行记录的状态和输出"""
+    history = load_history()
+    for record in history:
+        if record["id"] == execution_id:
+            record["status"] = status
+            record["output"] = output
+            if duration:
+                record["duration"] = duration
+            save_history(history)
+            return True
+    return False
+
 # 执行任务
 def execute_task(task):
     """执行任务，根据 agentId 判断在本地执行还是发送到 Agent"""
@@ -155,16 +199,20 @@ def execute_task(task):
     if agent_id:
         # 发送到 Agent 执行
         try:
+            # 先创建执行记录
+            execution_id = create_execution_record(task, agent_id)
+            
             # 使用 asyncio 运行异步函数
-            asyncio.run(send_task_to_agent(task, agent_id))
-            # Agent 执行是异步的，返回一个提示信息
+            asyncio.run(send_task_to_agent(task, agent_id, execution_id))
+            
+            # 返回执行记录信息
             return {
-                "id": str(datetime.now().timestamp()),
+                "id": execution_id,
                 "taskId": task["id"],
                 "taskName": task["name"],
                 "cmd": task["cmd"],
                 "executionTime": datetime.now().isoformat(),
-                "status": "pending",
+                "status": "running",
                 "output": f"任务已发送到 Agent {agent_id} 执行",
                 "agentId": agent_id
             }
@@ -195,6 +243,9 @@ def execute_task(task):
 
 def execute_task_local(task):
     """在本地执行任务"""
+    # 先创建执行中记录
+    execution_id = create_execution_record(task)
+    
     # 记录开始时间
     start_time = datetime.now()
     
@@ -233,80 +284,69 @@ def execute_task_local(task):
         duration_seconds = (end_time - start_time).total_seconds()
         duration_str = format_duration(duration_seconds)
         
-        # 构建执行结果
-        execution_result = {
-            "id": str(datetime.now().timestamp()),
+        # 构建输出
+        output = f"执行命令: {task['cmd']}\n工作目录: {work_dir or '默认'}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n返回码: {result.returncode}\n\n标准输出:\n{result.stdout}\n\n标准错误:\n{result.stderr}"
+        status = "success" if result.returncode == 0 else "error"
+        
+        # 更新执行记录
+        update_execution_record(execution_id, status, output, duration_str)
+        
+        return {
+            "id": execution_id,
             "taskId": task["id"],
             "taskName": task["name"],
             "cmd": task["cmd"],
             "executionTime": end_time.isoformat(),
-            "status": "success" if result.returncode == 0 else "error",
-            "output": f"执行命令: {task['cmd']}\n工作目录: {work_dir or '默认'}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n返回码: {result.returncode}\n\n标准输出:\n{result.stdout}\n\n标准错误:\n{result.stderr}",
+            "status": status,
+            "output": output,
             "duration": duration_str
         }
-        
-        # 添加到执行历史
-        history = load_history()
-        history.insert(0, execution_result)
-        if len(history) > 100:
-            history = history[:100]
-        save_history(history)
-        
-        return execution_result
     except subprocess.TimeoutExpired:
         # 计算执行时长
         end_time = datetime.now()
         duration_seconds = (end_time - start_time).total_seconds()
         duration_str = format_duration(duration_seconds)
         
-        # 记录超时错误
-        execution_result = {
-            "id": str(datetime.now().timestamp()),
+        # 构建输出
+        output = f"执行命令: {task['cmd']}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n错误: 命令执行超时（超过 {timeout} 秒）"
+        
+        # 更新执行记录
+        update_execution_record(execution_id, "error", output, duration_str)
+        
+        return {
+            "id": execution_id,
             "taskId": task["id"],
             "taskName": task["name"],
             "cmd": task["cmd"],
             "executionTime": end_time.isoformat(),
             "status": "error",
-            "output": f"执行命令: {task['cmd']}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n错误: 命令执行超时（超过 {timeout} 秒）",
+            "output": output,
             "duration": duration_str
         }
-        
-        # 添加到执行历史
-        history = load_history()
-        history.insert(0, execution_result)
-        if len(history) > 100:
-            history = history[:100]
-        save_history(history)
-        
-        return execution_result
     except Exception as e:
         # 计算执行时长
         end_time = datetime.now()
         duration_seconds = (end_time - start_time).total_seconds()
         duration_str = format_duration(duration_seconds)
         
-        # 记录其他错误
-        execution_result = {
-            "id": str(datetime.now().timestamp()),
+        # 构建输出
+        output = f"执行命令: {task['cmd']}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n错误: {str(e)}"
+        
+        # 更新执行记录
+        update_execution_record(execution_id, "error", output, duration_str)
+        
+        return {
+            "id": execution_id,
             "taskId": task["id"],
             "taskName": task["name"],
             "cmd": task["cmd"],
             "executionTime": end_time.isoformat(),
             "status": "error",
-            "output": f"执行命令: {task['cmd']}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n错误: {str(e)}",
+            "output": output,
             "duration": duration_str
         }
-        
-        # 添加到执行历史
-        history = load_history()
-        history.insert(0, execution_result)
-        if len(history) > 100:
-            history = history[:100]
-        save_history(history)
-        
-        return execution_result
 
-async def send_task_to_agent(task, agent_id):
+async def send_task_to_agent(task, agent_id, execution_id):
     """发送任务到 Agent 执行"""
     if agent_id not in manager.active_connections:
         raise Exception(f"Agent {agent_id} 不在线")
@@ -315,6 +355,7 @@ async def send_task_to_agent(task, agent_id):
     await manager.send_command(agent_id, {
         "type": "execute",
         "task_id": task["id"],
+        "execution_id": execution_id,
         "cmd": task["cmd"],
         "timeout": task.get("timeout", 300)
     })
@@ -571,6 +612,7 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     # 收到执行结果
                     result = message.get("result", {})
                     task_id = message.get("task_id")
+                    execution_id = message.get("execution_id")
                     
                     # 查找任务信息
                     tasks = load_tasks()
@@ -586,22 +628,31 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                         # 正常执行
                         output = f"Return code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
                     
-                    # 保存执行历史
-                    history = load_history()
-                    history.insert(0, {
-                        "id": str(datetime.now().timestamp()),
-                        "taskId": task_id,
-                        "taskName": task_name,
-                        "cmd": task_cmd,
-                        "executionTime": result.get("execution_time", datetime.now().isoformat()),
-                        "status": result.get("status", "unknown"),
-                        "output": output,
-                        "agentId": message.get("agent_id"),
-                        "duration": result.get("duration", "未知")
-                    })
-                    if len(history) > 100:
-                        history = history[:100]
-                    save_history(history)
+                    # 如果有 execution_id，更新现有记录
+                    if execution_id:
+                        update_execution_record(
+                            execution_id,
+                            result.get("status", "unknown"),
+                            output,
+                            result.get("duration")
+                        )
+                    else:
+                        # 兼容旧版本，创建新记录
+                        history = load_history()
+                        history.insert(0, {
+                            "id": str(datetime.now().timestamp()),
+                            "taskId": task_id,
+                            "taskName": task_name,
+                            "cmd": task_cmd,
+                            "executionTime": result.get("execution_time", datetime.now().isoformat()),
+                            "status": result.get("status", "unknown"),
+                            "output": output,
+                            "agentId": message.get("agent_id"),
+                            "duration": result.get("duration", "未知")
+                        })
+                        if len(history) > 100:
+                            history = history[:100]
+                        save_history(history)
                     
                     print(f"[Agent] Execution result received for task {task_id}, status: {result.get('status')}")
                 
