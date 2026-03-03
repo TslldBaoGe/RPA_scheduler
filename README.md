@@ -35,32 +35,9 @@ newgrp docker
 # 验证安装
 docker --version
 docker-compose --version
+```
 
-# 配置 Docker 镜像加速（解决拉取镜像慢的问题）
-# 先备份原有配置
-sudo mkdir -p /etc/docker
-sudo cp /etc/docker/daemon.json /etc/docker/daemon.json.bak 2>/dev/null || true
-
-# 创建新的配置文件
-sudo bash -c 'cat > /etc/docker/daemon.json << \'EOF\'
-{
-  "registry-mirrors": [
-    "https://docker.mirrors.ustc.edu.cn",
-    "https://hub-mirror.c.163.com"
-  ]
-}
-EOF'
-
-# 验证配置格式
-if sudo dockerd --config-file /etc/docker/daemon.json --validate 2>/dev/null; then
-    echo "配置验证通过，重启 Docker..."
-    sudo systemctl daemon-reload
-    sudo systemctl restart docker
-else
-    echo "配置验证失败，恢复备份..."
-    sudo cp /etc/docker/daemon.json.bak /etc/docker/daemon.json 2>/dev/null || sudo rm -f /etc/docker/daemon.json
-    sudo systemctl restart docker
-fi
+**注意**：如果 Docker 拉取镜像很慢，可以自行配置镜像加速器
 ```
 
 ### 2. 克隆代码
