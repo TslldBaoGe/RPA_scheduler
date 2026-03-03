@@ -166,8 +166,6 @@ async def execute_task_on_agent(task_id: str, agent_id: str):
 async def websocket_agent_endpoint(websocket: WebSocket):
     agent_id = None
     try:
-        await websocket.accept()
-        
         while True:
             try:
                 data = await asyncio.wait_for(websocket.receive_text(), timeout=30.0)
