@@ -305,13 +305,18 @@ const manualExecuteTask = async (task) => {
   try {
     const result = await api.executeTask(task.id)
     ElMessage.success(`任务 ${task.name} 已发送执行`)
-    // 延迟刷新执行历史（等待 Agent 执行完成）
-    setTimeout(async () => {
+    // 立即刷新
+    await loadExecutionHistory()
+    await loadTasks()
+    // 每2秒刷新一次，持续10秒
+    let count = 0
+    const interval = setInterval(async () => {
       await loadExecutionHistory()
-      // 再次刷新确保获取最新结果
-      setTimeout(async () => {
-        await loadExecutionHistory()
-      }, 3000)
+      await loadTasks()
+      count++
+      if (count >= 5) {
+        clearInterval(interval)
+      }
     }, 2000)
   } catch (error) {
     ElMessage.error(`任务 ${task.name} 执行失败: ${error.message}`)
@@ -343,13 +348,13 @@ onMounted(async () => {
   await loadExecutionHistory()
   updateTaskStatus()
   
-  // 每30秒刷新一次任务列表和执行历史
+  // 每5秒刷新一次任务列表和执行历史
   setInterval(async () => {
     await loadTasks()
     await loadAgents()
     await loadExecutionHistory()
     updateTaskStatus()
-  }, 30000)
+  }, 5000)
 })
 
 // 组件卸载时清理
