@@ -149,6 +149,51 @@ git pull
 ./deploy.sh
 ```
 
+## 代码更新
+
+当代码有更新时，可以通过以下方式更新服务器：
+
+### 方式一：Git Pull 更新（推荐）
+
+```bash
+cd /opt/apps/RPA_scheduler
+
+# 拉取最新代码
+git pull origin master
+
+# 重新部署
+./deploy.sh
+```
+
+### 方式二：手动上传更新
+
+如果无法使用 Git，可以手动上传代码：
+
+```bash
+# 1. 在本地打包代码（排除 node_modules 和 .venv）
+# 2. 上传到服务器 /opt/apps/RPA_scheduler 目录
+# 3. 覆盖原有文件
+
+# 4. 重新部署
+./deploy.sh
+```
+
+### 方式三：使用 SCP 上传
+
+```bash
+# 从本地上传到服务器
+scp -r backend/ frontend/ deploy.sh docker-compose.yml Dockerfile nginx.conf user@服务器IP:/opt/apps/RPA_scheduler/
+
+# 然后在服务器上执行
+ssh user@服务器IP "cd /opt/apps/RPA_scheduler && ./deploy.sh"
+```
+
+### 更新注意事项
+
+1. **数据备份**：更新前建议备份 `./data/` 目录
+2. **服务中断**：更新过程中服务会有短暂中断（约 1-2 分钟）
+3. **版本回滚**：如果更新失败，可以使用 `git reset --hard HEAD~1` 回滚
+
 ## 目录结构
 
 ```
