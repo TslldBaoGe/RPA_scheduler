@@ -540,7 +540,13 @@ onUnmounted(() => {
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="output" label="输出" />
+      <el-table-column label="输出" min-width="200">
+        <template #default="{ row }">
+          <el-tooltip :content="row.output" placement="top" :disabled="!row.output || row.output.length <= 100">
+            <span class="ellipsis-text">{{ row.output ? (row.output.length > 100 ? row.output.substring(0, 100) + '...' : row.output) : '-' }}</span>
+          </el-tooltip>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       v-model:current-page="historyCurrentPage"
