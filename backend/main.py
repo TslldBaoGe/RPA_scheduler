@@ -32,16 +32,14 @@ app.include_router(router)
 @app.websocket("/ws/agent")
 async def websocket_agent_endpoint(websocket: WebSocket):
     agent_id = None
-    last_pong_time = datetime.now()
-    heartbeat_timeout = 120  # 心跳超时时间 120 秒
     
     try:
         await websocket.accept()
         
         while True:
             try:
-                # 使用更长的超时时间，允许 Agent 执行任务时不被断开
-                data = await asyncio.wait_for(websocket.receive_text(), timeout=heartbeat_timeout)
+                # 无限等待消息，不设置超时，让连接保持直到真正断开
+                data = await websocket.receive_text()
                 message = json.loads(data)
                 msg_type = message.get("type")
                 
@@ -52,7 +50,6 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     if agent_id:
                         manager.active_connections[agent_id] = websocket
                         manager.register_agent(agent_id, agent_info)
-                        last_pong_time = datetime.now()
                         print(f"[Agent] Registered: {agent_info.get('agent_name')} ({agent_id})")
                         
                         await websocket.send_json({
@@ -106,24 +103,15 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     agent_id = message.get("agent_id")
                     if agent_id:
                         manager.update_ping(agent_id)
-                        last_pong_time = datetime.now()
                         
-            except asyncio.TimeoutError:
-                # 检查是否超过心跳超时时间
-                if agent_id and agent_id in manager.active_connections:
-                    time_since_last_pong = (datetime.now() - last_pong_time).total_seconds()
-                    if time_since_last_pong > heartbeat_timeout:
-                        print(f"[Agent] Heartbeat timeout for {agent_id}, disconnecting...")
-                        break
-                    else:
-                        # 发送 ping 检查 Agent 是否还活着
-                        try:
-                            await websocket.send_json({"type": "ping"})
-                        except Exception as e:
-                            print(f"[Agent] Failed to send ping to {agent_id}: {e}")
-                            break
+            except Exception as e:
+                # 任何异常都跳出循环，让连接断开
+                print(f"[Agent] WebSocket error for {agent_id}: {e}")
+                break
                     
     except WebSocketDisconnect:
+        pass
+    finally:
         if agent_id:
             manager.disconnect(agent_id)
             print(f"[Agent] Disconnected: {agent_id}")
