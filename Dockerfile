@@ -1,7 +1,6 @@
 # 使用 Python 3.12.12 作为基础镜像
-# 如果官方镜像拉取慢，可以在服务器上配置镜像加速器：
-# echo '{"registry-mirrors":["https://docker.mirrors.ustc.edu.cn"]}' | sudo tee /etc/docker/daemon.json
-FROM python:3.12.12-slim
+# 使用 DaoCloud 镜像源（国内可访问）
+FROM m.daocloud.io/docker.io/library/python:3.12.12-slim
 
 # 设置工作目录
 WORKDIR /app
