@@ -11,9 +11,15 @@ services:
       - ./logs:/app/logs
     environment:
       - TZ=Asia/Shanghai
+      - PYTHONUNBUFFERED=1  # 确保 Python 输出不缓冲
     restart: unless-stopped
     networks:
       - rpa-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   nginx:
     image: nginx:alpine

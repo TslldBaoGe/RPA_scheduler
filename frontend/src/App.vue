@@ -4,8 +4,9 @@ import { CronExpressionParser } from 'cron-parser'
 import { ElButton, ElInput, ElTable, ElTableColumn, ElForm, ElFormItem, ElDialog, ElMessage, ElTag, ElTooltip, ElIcon, ElPagination } from 'element-plus'
 import { WarningFilled } from '@element-plus/icons-vue'
 
-// API 基础 URL
-const API_BASE_URL = 'http://localhost:8000'
+// API 基础 URL - 生产环境
+const API_BASE_URL = 'http://120.79.224.20:8000'
+// const API_BASE_URL = 'http://localhost:8000'  // 本地开发环境
 
 // 模拟 API 调用
 const api = {
