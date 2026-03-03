@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 
 from models import Task, ExecutionHistory, AgentResponse
-from storage import load_tasks, save_tasks
+from storage import load_tasks, save_tasks, load_history
 from task_executor import execute_task
 from connection_manager import manager
 from scheduler_manager import scheduler_manager
