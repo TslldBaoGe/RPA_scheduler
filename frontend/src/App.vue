@@ -432,7 +432,7 @@ onUnmounted(() => {
           {{ getNextExecution(row.cronExpression) }}
         </template>
       </el-table-column>
-      <el-table-column label="最近5次执行" width="100">
+      <el-table-column label="最近5次执行" width="180">
         <template #default="{ row }">
           <el-tooltip placement="top">
             <template #content>
