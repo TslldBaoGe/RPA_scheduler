@@ -13,8 +13,8 @@ from config import MAX_HISTORY_SIZE
 
 
 app = FastAPI(
-    title="定时任务调度系统 API",
-    description="用于管理和执行定时任务的后端 API",
+    title="RPA Scheduler API",
+    description="RPA智能任务调度系统后端API",
     version="1.0.0"
 )
 
