@@ -31,6 +31,7 @@ class ExecutionHistory(BaseModel):
     status: str
     output: str
     agentId: Optional[str] = None  # 执行的 Agent ID
+    duration: Optional[str] = None  # 执行时长（格式：x时x分x秒）
 
 # Agent 模型
 class Agent(BaseModel):
@@ -48,6 +49,23 @@ AGENTS_FILE = "agents.json"  # Agent 存储文件
 
 # 命令执行超时时间（秒）
 CMD_TIMEOUT = 300  # 默认 5 分钟
+
+# 格式化执行时长
+def format_duration(seconds):
+    """将秒数格式化为 x时x分x秒"""
+    hours = int(seconds // 3600)
+    minutes = int((seconds % 3600) // 60)
+    secs = int(seconds % 60)
+    
+    parts = []
+    if hours > 0:
+        parts.append(f"{hours}时")
+    if minutes > 0:
+        parts.append(f"{minutes}分")
+    if secs > 0 or (hours == 0 and minutes == 0):
+        parts.append(f"{secs}秒")
+    
+    return "".join(parts) if parts else "0秒"
 
 # Agent 连接管理
 class ConnectionManager:
@@ -177,6 +195,9 @@ def execute_task(task):
 
 def execute_task_local(task):
     """在本地执行任务"""
+    # 记录开始时间
+    start_time = datetime.now()
+    
     try:
         # 执行 CMD 命令
         # 获取超时时间，默认使用 CMD_TIMEOUT
@@ -207,15 +228,21 @@ def execute_task_local(task):
             cwd=work_dir  # 设置工作目录
         )
         
+        # 计算执行时长
+        end_time = datetime.now()
+        duration_seconds = (end_time - start_time).total_seconds()
+        duration_str = format_duration(duration_seconds)
+        
         # 构建执行结果
         execution_result = {
             "id": str(datetime.now().timestamp()),
             "taskId": task["id"],
             "taskName": task["name"],
             "cmd": task["cmd"],
-            "executionTime": datetime.now().isoformat(),
+            "executionTime": end_time.isoformat(),
             "status": "success" if result.returncode == 0 else "error",
-            "output": f"执行命令: {task['cmd']}\n工作目录: {work_dir or '默认'}\n执行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n返回码: {result.returncode}\n\n标准输出:\n{result.stdout}\n\n标准错误:\n{result.stderr}"
+            "output": f"执行命令: {task['cmd']}\n工作目录: {work_dir or '默认'}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n返回码: {result.returncode}\n\n标准输出:\n{result.stdout}\n\n标准错误:\n{result.stderr}",
+            "duration": duration_str
         }
         
         # 添加到执行历史
@@ -227,15 +254,21 @@ def execute_task_local(task):
         
         return execution_result
     except subprocess.TimeoutExpired:
+        # 计算执行时长
+        end_time = datetime.now()
+        duration_seconds = (end_time - start_time).total_seconds()
+        duration_str = format_duration(duration_seconds)
+        
         # 记录超时错误
         execution_result = {
             "id": str(datetime.now().timestamp()),
             "taskId": task["id"],
             "taskName": task["name"],
             "cmd": task["cmd"],
-            "executionTime": datetime.now().isoformat(),
+            "executionTime": end_time.isoformat(),
             "status": "error",
-            "output": f"执行命令: {task['cmd']}\n执行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n错误: 命令执行超时（超过 {timeout} 秒）"
+            "output": f"执行命令: {task['cmd']}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n错误: 命令执行超时（超过 {timeout} 秒）",
+            "duration": duration_str
         }
         
         # 添加到执行历史
@@ -247,15 +280,21 @@ def execute_task_local(task):
         
         return execution_result
     except Exception as e:
+        # 计算执行时长
+        end_time = datetime.now()
+        duration_seconds = (end_time - start_time).total_seconds()
+        duration_str = format_duration(duration_seconds)
+        
         # 记录其他错误
         execution_result = {
             "id": str(datetime.now().timestamp()),
             "taskId": task["id"],
             "taskName": task["name"],
             "cmd": task["cmd"],
-            "executionTime": datetime.now().isoformat(),
+            "executionTime": end_time.isoformat(),
             "status": "error",
-            "output": f"执行命令: {task['cmd']}\n执行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n错误: {str(e)}"
+            "output": f"执行命令: {task['cmd']}\n执行时间: {end_time.strftime('%Y-%m-%d %H:%M:%S')}\n错误: {str(e)}",
+            "duration": duration_str
         }
         
         # 添加到执行历史
@@ -557,7 +596,8 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                         "executionTime": result.get("execution_time", datetime.now().isoformat()),
                         "status": result.get("status", "unknown"),
                         "output": output,
-                        "agentId": message.get("agent_id")
+                        "agentId": message.get("agent_id"),
+                        "duration": result.get("duration", "未知")
                     })
                     if len(history) > 100:
                         history = history[:100]

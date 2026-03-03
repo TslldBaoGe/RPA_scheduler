@@ -446,12 +446,20 @@ onUnmounted(() => {
     <el-table :data="paginatedHistory" style="width: 100%">
       <el-table-column prop="taskName" label="任务名称" width="180" />
       <el-table-column prop="cmd" label="CMD命令" width="300" />
-      <el-table-column prop="executionTime" label="执行时间" width="200">
+      <el-table-column prop="executionTime" label="执行时间" width="180">
         <template #default="{ row }">
           {{ formatDate(new Date(row.executionTime)) }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="100">
+      <el-table-column prop="duration" label="执行时长" width="120">
+        <template #default="{ row }">
+          <el-tag v-if="row.duration" type="info" size="small">
+            {{ row.duration }}
+          </el-tag>
+          <span v-else style="color: #999;">-</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" width="80">
         <template #default="{ row }">
           <el-tag :type="row.status === 'success' ? 'success' : 'danger'">
             {{ row.status === 'success' ? '成功' : '失败' }}
