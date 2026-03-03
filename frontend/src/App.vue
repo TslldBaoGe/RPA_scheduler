@@ -360,7 +360,7 @@ onUnmounted(() => {
 
 <template>
   <div class="container">
-    <h1>定时任务调度系统</h1>
+    <h1>RPA Scheduler</h1>
     
     <!-- Agent 管理区域 -->
     <div class="section">
