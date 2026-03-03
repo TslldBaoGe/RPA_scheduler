@@ -198,6 +198,14 @@ const getNextExecutions = (cronExpr, count = 5) => {
   }
 }
 
+// 获取任务的最近执行记录
+const getTaskRecentExecutions = (taskId, count = 5) => {
+  return executionHistory.value
+    .filter(h => h.taskId === taskId)
+    .sort((a, b) => new Date(b.executionTime) - new Date(a.executionTime))
+    .slice(0, count)
+}
+
 // 加载任务
 const loadTasks = async () => {
   tasks.value = await api.getTasks()
@@ -394,12 +402,25 @@ onUnmounted(() => {
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="下一次执行" width="200">
+      <el-table-column label="下一次执行" width="180">
         <template #default="{ row }">
           {{ getNextExecution(row.cronExpression) }}
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="100">
+      <el-table-column label="最近5次执行" width="220">
+        <template #default="{ row }">
+          <div class="recent-executions">
+            <div v-for="(exec, index) in getTaskRecentExecutions(row.id, 5)" :key="index" class="execution-item">
+              <el-tag :type="exec.status === 'success' ? 'success' : 'danger'" size="small" class="execution-tag">
+                {{ exec.status === 'success' ? '✓' : '✗' }}
+              </el-tag>
+              <span class="execution-time">{{ formatDate(new Date(exec.executionTime)).split(' ')[1] }}</span>
+            </div>
+            <span v-if="getTaskRecentExecutions(row.id, 5).length === 0" style="color: #999; font-size: 12px;">暂无执行记录</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" width="80">
         <template #default="{ row }">
           <el-tag :type="taskStatus[row.id]?.status === 'success' ? 'success' : taskStatus[row.id]?.status === 'error' ? 'danger' : 'info'">
             {{ taskStatus[row.id]?.status || '待执行' }}
@@ -577,5 +598,29 @@ h1 {
   text-overflow: ellipsis;
   display: block;
   max-width: 100%;
+}
+
+.recent-executions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.execution-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.execution-tag {
+  min-width: 24px;
+  text-align: center;
+  padding: 0 4px;
+}
+
+.execution-time {
+  color: #666;
+  font-family: monospace;
 }
 </style>
