@@ -495,7 +495,13 @@ onUnmounted(() => {
           <span v-else style="color: #999;">本地执行</span>
         </template>
       </el-table-column>
-      <el-table-column prop="cmd" label="CMD命令" width="250" />
+      <el-table-column label="CMD命令" width="250" show-overflow-tooltip>
+        <template #default="{ row }">
+          <el-tooltip :content="row.cmd" placement="top" :disabled="!row.cmd || row.cmd.length <= 30">
+            <span class="ellipsis-text">{{ row.cmd }}</span>
+          </el-tooltip>
+        </template>
+      </el-table-column>
       <el-table-column prop="executionTime" label="执行时间" width="180">
         <template #default="{ row }">
           {{ formatDate(new Date(row.executionTime)) }}
