@@ -486,8 +486,16 @@ onUnmounted(() => {
     
     <h2>执行历史</h2>
     <el-table :data="paginatedHistory" style="width: 100%">
-      <el-table-column prop="taskName" label="任务名称" width="180" />
-      <el-table-column prop="cmd" label="CMD命令" width="300" />
+      <el-table-column prop="taskName" label="任务名称" width="160" />
+      <el-table-column label="执行Agent" width="120">
+        <template #default="{ row }">
+          <el-tooltip v-if="row.agentId" :content="agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId" placement="top">
+            <span class="ellipsis-text">{{ agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId }}</span>
+          </el-tooltip>
+          <span v-else style="color: #999;">本地执行</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="cmd" label="CMD命令" width="250" />
       <el-table-column prop="executionTime" label="执行时间" width="180">
         <template #default="{ row }">
           {{ formatDate(new Date(row.executionTime)) }}
