@@ -74,7 +74,16 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 docker-compose --version
 ```
 
-### 1.2 安装 Node.js 和 NPM
+### 1.2 关于 Nginx
+
+本项目使用 **Docker 容器内的 Nginx**，无需在宿主机上单独安装 Nginx。
+
+- Nginx 作为反向代理，将前端请求转发到后端服务
+- 同时处理 WebSocket 连接（用于 Agent 通信）
+- 配置文件位于 `./nginx.conf`，会在容器启动时自动加载
+- 如需自定义配置，修改 `nginx.conf` 后重启容器即可：`docker-compose restart nginx`
+
+### 1.3 安装 Node.js 和 NPM
 
 ```bash
 # 安装 Node.js 24.x 和 NPM
@@ -123,7 +132,21 @@ git clone https://github.com/TslldBaoGe/RPA_scheduler.git
 cd RPA_scheduler
 ```
 
-### 3. 一键部署
+### 3. 配置 Nginx（可选）
+
+默认配置已满足大部分需求，如需修改：
+
+```bash
+# 编辑 nginx.conf
+vim nginx.conf
+
+# 常用配置项：
+# - 修改监听端口（默认 80）
+# - 配置 HTTPS/SSL
+# - 调整代理超时时间
+```
+
+### 4. 一键部署
 
 ```bash
 # 赋予执行权限
@@ -138,17 +161,101 @@ chmod +x deploy.sh
 - 构建 Docker 镜像
 - 启动后端服务和 Nginx
 
-### 4. 访问系统
+### 5. 访问系统
 
 ```
 http://服务器IP地址
 ```
 
-## 手动部署
+**Nginx 服务说明：**
+- Nginx 容器已自动启动，监听 80 端口
+- 前端静态文件通过 Nginx 提供
+- API 请求通过 Nginx 反向代理到后端（8000 端口）
+- WebSocket 连接通过 Nginx 代理（用于 Agent 通信）
 
-如果不想使用 Docker，可以手动部署：
+## 手动部署（不使用 Docker）
 
-### 后端部署
+**注意：** 手动部署需要在宿主机上安装 Nginx。
+
+### 安装 Nginx（Ubuntu）
+
+```bash
+# 更新软件包
+sudo apt update
+
+# 安装 Nginx
+sudo apt install nginx -y
+
+# 启动 Nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+# 验证安装
+nginx -v
+```
+
+### Nginx 配置
+
+创建配置文件：
+
+```bash
+sudo vim /etc/nginx/sites-available/rpa-scheduler
+```
+
+添加以下内容：
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;  # 替换为你的域名或IP
+
+    # 前端静态文件
+    location / {
+        root /path/to/RPA_scheduler/frontend/dist;  # 替换为实际路径
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+
+    # 后端 API
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # WebSocket (Agent 连接)
+    location /ws/ {
+        proxy_pass http://127.0.0.1:8000/ws/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_read_timeout 86400;
+    }
+}
+```
+
+启用配置：
+
+```bash
+# 创建软链接
+sudo ln -s /etc/nginx/sites-available/rpa-scheduler /etc/nginx/sites-enabled/
+
+# 测试配置
+sudo nginx -t
+
+# 重载 Nginx
+sudo systemctl reload nginx
+```
+ 
+ ### 后端部署
 
 ```bash
 cd backend
