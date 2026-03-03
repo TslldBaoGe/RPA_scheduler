@@ -393,14 +393,14 @@ onUnmounted(() => {
     </div>
     
     <el-table :data="tasks" style="width: 100%">
-      <el-table-column label="任务名称" min-width="180" show-overflow-tooltip>
+      <el-table-column label="任务名称" min-width="140" show-overflow-tooltip>
         <template #default="{ row }">
           <el-tooltip :content="row.name" placement="top" :disabled="row.name.length <= 20">
             <span class="ellipsis-text">{{ row.name }}</span>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="执行Agent" min-width="150">
+      <el-table-column label="执行Agent" min-width="120">
         <template #default="{ row }">
           <el-tooltip v-if="row.agentId" :content="agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId" placement="top">
             <span class="ellipsis-text">{{ agents.find(a => a.agent_id === row.agentId)?.agent_name || row.agentId }}</span>
@@ -408,7 +408,7 @@ onUnmounted(() => {
           <span v-else style="color: #999;">本地执行</span>
         </template>
       </el-table-column>
-      <el-table-column label="Cron表达式" width="180">
+      <el-table-column label="Cron表达式" width="140">
         <template #header>
           <span>
             Cron表达式
@@ -427,12 +427,12 @@ onUnmounted(() => {
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="下一次执行" width="180">
+      <el-table-column label="下一次执行" width="150">
         <template #default="{ row }">
           {{ getNextExecution(row.cronExpression) }}
         </template>
       </el-table-column>
-      <el-table-column label="最近5次执行" width="120">
+      <el-table-column label="最近5次执行" width="100">
         <template #default="{ row }">
           <el-tooltip placement="top">
             <template #content>
@@ -462,26 +462,26 @@ onUnmounted(() => {
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="状态" width="100">
+      <el-table-column label="状态" width="80">
         <template #default="{ row }">
           <el-tag :type="getTaskCurrentStatus(row.id).type">
             {{ getTaskCurrentStatus(row.id).text }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="CMD命令" min-width="350" show-overflow-tooltip>
+      <el-table-column label="CMD命令" min-width="200" show-overflow-tooltip>
         <template #default="{ row }">
           <el-tooltip :content="row.cmd" placement="top" :disabled="row.cmd.length <= 30">
             <span class="ellipsis-text">{{ row.cmd }}</span>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="超时时间" width="100">
+      <el-table-column label="超时时间" width="80">
         <template #default="{ row }">
           {{ row.timeout || 300 }}s
         </template>
       </el-table-column>
-      <el-table-column label="描述" min-width="200" show-overflow-tooltip>
+      <el-table-column label="描述" min-width="150" show-overflow-tooltip>
         <template #default="{ row }">
           <el-tooltip :content="row.description" placement="top" :disabled="!row.description || row.description.length <= 15">
             <span class="ellipsis-text">{{ row.description || '-' }}</span>
