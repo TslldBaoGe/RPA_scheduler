@@ -1,0 +1,636 @@
+2026-03-03 12:38:55,916 - uvicorn.error - INFO - Started server process [22556]
+2026-03-03 12:38:55,917 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 12:38:55,917 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 12:38:55,917 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。
+2026-03-03 12:38:55,918 - uvicorn.error - INFO - Waiting for application shutdown.
+2026-03-03 12:38:55,919 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-03-03 12:38:55,919 - uvicorn.error - INFO - Application shutdown complete.
+2026-03-03 12:39:29,439 - uvicorn.error - INFO - Started server process [22924]
+2026-03-03 12:39:29,439 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 12:39:29,439 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 12:39:29,440 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 12:41:07,709 - uvicorn.error - INFO - Started server process [22876]
+2026-03-03 12:41:07,711 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 12:41:07,711 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 12:41:07,711 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 13:48:00,392 - uvicorn.error - INFO - Started server process [29056]
+2026-03-03 13:48:00,393 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 13:48:00,393 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 13:48:00,395 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 13:52:42,021 - uvicorn.error - INFO - 127.0.0.1:30114 - "WebSocket /ws/agent" [accepted]
+2026-03-03 13:52:42,021 - uvicorn.error - INFO - connection open
+2026-03-03 13:59:46,532 - uvicorn.error - INFO - Started server process [8552]
+2026-03-03 13:59:46,533 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 13:59:46,533 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 13:59:46,535 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 13:59:50,176 - uvicorn.error - INFO - 127.0.0.1:12323 - "WebSocket /ws/agent" [accepted]
+2026-03-03 13:59:50,177 - uvicorn.error - INFO - connection open
+2026-03-03 14:12:08,576 - apscheduler.scheduler - INFO - Added job "execute_task" to job store "default"
+2026-03-03 14:12:11,225 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 428, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:12:14,167 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 428, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:12:16,008 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 428, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:12:30,724 - apscheduler.scheduler - INFO - Added job "execute_task" to job store "default"
+2026-03-03 14:12:31,554 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 428, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:12:33,739 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 428, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:14:03,410 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 428, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:14:13,235 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 428, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:18:15,008 - uvicorn.error - INFO - Started server process [8108]
+2026-03-03 14:18:15,009 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 14:18:15,010 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 14:18:15,010 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 14:18:21,797 - uvicorn.error - INFO - 127.0.0.1:15117 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:18:21,799 - uvicorn.error - INFO - connection open
+2026-03-03 14:18:53,830 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 446, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:20:42,738 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 691, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 296, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 446, in manual_execute_task
+    POST /tasks/{task_id}/execute
+2026-03-03 14:21:33,608 - uvicorn.error - INFO - Started server process [36592]
+2026-03-03 14:21:33,610 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 14:21:33,610 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 14:21:33,610 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 14:21:39,740 - uvicorn.error - INFO - 127.0.0.1:13194 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:21:39,742 - uvicorn.error - INFO - connection open
+2026-03-03 14:22:22,077 - apscheduler.scheduler - INFO - Added job "execute_task" to job store "default"
+2026-03-03 14:25:13,221 - apscheduler.scheduler - INFO - Removed job 1772518328.574637
+2026-03-03 14:29:28,804 - uvicorn.error - INFO - connection closed
+2026-03-03 14:29:33,370 - uvicorn.error - INFO - 127.0.0.1:15799 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:29:33,370 - uvicorn.error - INFO - connection open
+2026-03-03 14:30:24,546 - uvicorn.error - INFO - connection closed
+2026-03-03 14:32:08,448 - uvicorn.error - INFO - 127.0.0.1:34324 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:32:08,448 - uvicorn.error - INFO - connection open
+2026-03-03 14:45:49,677 - uvicorn.error - INFO - connection closed
+2026-03-03 14:46:18,379 - uvicorn.error - INFO - 127.0.0.1:26381 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:46:18,379 - uvicorn.error - INFO - connection open
+2026-03-03 14:55:02,464 - uvicorn.error - INFO - Started server process [25508]
+2026-03-03 14:55:02,465 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 14:55:02,465 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 14:55:02,466 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 14:55:03,869 - uvicorn.error - INFO - 127.0.0.1:13364 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:55:03,871 - uvicorn.error - INFO - connection open
+2026-03-03 14:55:10,874 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 116, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 670, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\fastapi\routing.py", line 326, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 347, in get_tasks
+    return load_tasks()
+           ^^^^^^^^^^^^
+  File "D:\SwagTslldLocalProject\RPA_scheduler\backend\main.py", line 115, in load_tasks
+    return json.load(f)
+           ^^^^^^^^^^^^
+  File "C:\Users\xbye\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\xbye\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xbye\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\json\decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xbye\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\json\decoder.py", line 354, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 6 column 12 (char 92)
+2026-03-03 14:55:24,767 - uvicorn.error - INFO - Started server process [32676]
+2026-03-03 14:55:24,767 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 14:55:24,768 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 14:55:24,769 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 14:55:25,686 - uvicorn.error - INFO - 127.0.0.1:10461 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:55:25,687 - uvicorn.error - INFO - connection open
+2026-03-03 14:59:30,863 - uvicorn.error - INFO - connection closed
+2026-03-03 14:59:37,691 - uvicorn.error - INFO - 127.0.0.1:52903 - "WebSocket /ws/agent" [accepted]
+2026-03-03 14:59:37,691 - uvicorn.error - INFO - connection open
+2026-03-03 15:00:55,233 - uvicorn.error - INFO - connection closed
+2026-03-03 15:01:02,802 - uvicorn.error - INFO - 127.0.0.1:61705 - "WebSocket /ws/agent" [accepted]
+2026-03-03 15:01:02,802 - uvicorn.error - INFO - connection open
+2026-03-03 15:02:57,013 - uvicorn.error - INFO - connection closed
+2026-03-03 15:03:03,885 - uvicorn.error - INFO - 127.0.0.1:28056 - "WebSocket /ws/agent" [accepted]
+2026-03-03 15:03:03,886 - uvicorn.error - INFO - connection open
+2026-03-03 15:12:59,294 - uvicorn.error - INFO - Started server process [14236]
+2026-03-03 15:12:59,294 - uvicorn.error - INFO - Waiting for application startup.
+2026-03-03 15:12:59,294 - uvicorn.error - INFO - Application startup complete.
+2026-03-03 15:12:59,294 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-03 15:12:59,773 - uvicorn.error - INFO - 127.0.0.1:60236 - "WebSocket /ws/agent" [accepted]
+2026-03-03 15:12:59,774 - uvicorn.error - INFO - connection open

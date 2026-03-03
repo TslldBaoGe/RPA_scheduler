@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+apscheduler
+pydantic-settings
+python-multipart
+websockets
