@@ -35,6 +35,21 @@ newgrp docker
 # 验证安装
 docker --version
 docker-compose --version
+
+# 配置 Docker 镜像加速（解决拉取镜像慢的问题）
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json << 'EOF'
+{
+  "registry-mirrors": [
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://hub-mirror.c.163.com",
+    "https://mirror.baidubce.com",
+    "https://ccr.ccs.tencentyun.com"
+  ]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 
 ### 2. 克隆代码
