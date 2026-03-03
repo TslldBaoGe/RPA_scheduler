@@ -57,6 +57,58 @@ JSONEOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
+
+### 1.1 安装 Docker Compose
+
+```bash
+# 安装 Docker Compose（Ubuntu 22.04 需要单独安装 v2 版本）
+sudo curl -SL https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+
+# 添加执行权限
+sudo chmod +x /usr/local/bin/docker-compose
+
+# 创建软链接（可选，让 docker-compose 命令可用）
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+# 验证安装
+docker-compose --version
+```
+
+### 1.2 安装 Node.js 和 NPM
+
+```bash
+# 安装 Node.js 24.x 和 NPM
+# 使用 nvm 安装（推荐）
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# 重新加载环境变量
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# 安装 Node.js 24.13.0
+nvm install 24.13.0
+
+# 使用 Node.js 24.13.0
+nvm use 24.13.0
+
+# 验证安装
+node --version
+npm --version
+```
+
+或者使用官方二进制方式安装：
+
+```bash
+# 下载 Node.js 24.x 二进制文件
+curl -fsSL https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.xz -o node.tar.xz
+
+# 解压
+sudo tar -xJf node.tar.xz -C /usr/local --strip-components=1
+rm node.tar.xz
+
+# 验证安装
+node --version
+npm --version
 ```
 
 ### 2. 克隆代码
