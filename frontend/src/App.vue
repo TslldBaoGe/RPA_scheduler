@@ -424,7 +424,7 @@ onUnmounted(() => {
           {{ getNextExecution(row.cronExpression) }}
         </template>
       </el-table-column>
-      <el-table-column label="最近5次执行" width="220">
+      <el-table-column label="最近5次执行" width="280">
         <template #default="{ row }">
           <div class="recent-executions">
             <div v-for="(exec, index) in getTaskRecentExecutions(row.id, 5)" :key="index" class="execution-item">
@@ -435,7 +435,7 @@ onUnmounted(() => {
               >
                 {{ exec.status === 'success' ? '✓' : exec.status === 'running' ? '◐' : '✗' }}
               </el-tag>
-              <span class="execution-time">{{ formatDate(new Date(exec.executionTime)).split(' ')[1] }}</span>
+              <span class="execution-time">{{ formatDate(new Date(exec.executionTime)) }}</span>
             </div>
             <span v-if="getTaskRecentExecutions(row.id, 5).length === 0" style="color: #999; font-size: 12px;">暂无执行记录</span>
           </div>
