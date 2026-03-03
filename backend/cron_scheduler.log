@@ -634,3 +634,6 @@ json.decoder.JSONDecodeError: Unterminated string starting at: line 6 column 12 
 2026-03-03 15:12:59,294 - uvicorn.error - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 2026-03-03 15:12:59,773 - uvicorn.error - INFO - 127.0.0.1:60236 - "WebSocket /ws/agent" [accepted]
 2026-03-03 15:12:59,774 - uvicorn.error - INFO - connection open
+2026-03-03 15:36:47,091 - apscheduler.scheduler - INFO - Added job "execute_task" to job store "default"
+2026-03-03 15:37:00,013 - apscheduler.executors.default - INFO - Running job "execute_task (trigger: cron[month='*', day='*', day_of_week='*', hour='15', minute='37'], next run at: 2026-03-03 15:37:00 CST)" (scheduled at 2026-03-03 15:37:00+08:00)
+2026-03-03 15:37:00,016 - apscheduler.executors.default - INFO - Job "execute_task (trigger: cron[month='*', day='*', day_of_week='*', hour='15', minute='37'], next run at: 2026-03-04 15:37:00 CST)" executed successfully
