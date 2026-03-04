@@ -581,7 +581,10 @@ onUnmounted(() => {
       </el-table-column>
       <el-table-column label="输出" min-width="200">
         <template #default="{ row }">
-          <el-tooltip :content="row.output" placement="top" :disabled="!row.output || row.output.length <= 100">
+          <el-tooltip placement="top" :disabled="!row.output || row.output.length <= 100" effect="dark" popper-class="output-tooltip">
+            <template #content>
+              <pre style="white-space: pre-wrap; word-break: break-all; max-height: 400px; overflow-y: auto; max-width: 600px;">{{ row.output }}</pre>
+            </template>
             <span class="ellipsis-text">{{ row.output ? (row.output.length > 100 ? row.output.substring(0, 100) + '...' : row.output) : '-' }}</span>
           </el-tooltip>
         </template>
@@ -707,6 +710,10 @@ h1 {
   text-overflow: ellipsis;
   display: block;
   max-width: 100%;
+}
+
+.output-tooltip {
+  max-width: 600px !important;
 }
 
 .recent-executions {
