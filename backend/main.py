@@ -9,6 +9,7 @@ from scheduler_manager import scheduler_manager
 from api_routes import router
 from connection_manager import manager
 from task_executor import update_execution_record
+from task_tracker import task_tracker
 from config import MAX_HISTORY_SIZE
 
 
@@ -68,7 +69,11 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     task_name = task["name"] if task else f"Task-{task_id}"
                     task_cmd = task["cmd"] if task else result.get("cmd", "")
                     
-                    if result.get("status") == "error" and result.get("error"):
+                    status = result.get("status", "unknown")
+                    
+                    if status == "terminated":
+                        output = f"[任务已被用户终止]\n\nReturn code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
+                    elif status == "error" and result.get("error"):
                         output = f"Error: {result.get('error')}\n\nReturn code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
                     else:
                         output = f"Return code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
@@ -76,10 +81,12 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     if execution_id:
                         update_execution_record(
                             execution_id,
-                            result.get("status", "unknown"),
+                            status,
                             output,
                             result.get("duration")
                         )
+                        # 从跟踪器移除
+                        task_tracker.unregister_execution(execution_id)
                     else:
                         history = load_history()
                         history.insert(0, {
@@ -88,7 +95,7 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                             "taskName": task_name,
                             "cmd": task_cmd,
                             "executionTime": result.get("execution_time", datetime.now().isoformat()),
-                            "status": result.get("status", "unknown"),
+                            "status": status,
                             "output": output,
                             "agentId": message.get("agent_id"),
                             "duration": result.get("duration", "未知")
@@ -97,7 +104,7 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                             history = history[:MAX_HISTORY_SIZE]
                         save_history(history)
                     
-                    print(f"[Agent] Execution result received for task {task_id}, status: {result.get('status')}")
+                    print(f"[Agent] Execution result received for task {task_id}, status: {status}")
                 
                 elif msg_type == "pong":
                     agent_id = message.get("agent_id")
