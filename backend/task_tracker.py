@@ -43,27 +43,33 @@ class TaskExecutionTracker:
     def get_all_running(self) -> Dict[str, dict]:
         return self.running_tasks.copy()
     
+    def get_agent_for_execution(self, execution_id: str) -> Optional[str]:
+        execution = self.running_tasks.get(execution_id)
+        if execution and execution.get("type") == "remote":
+            return execution.get("agent_id")
+        return None
+    
     def terminate_local(self, execution_id: str) -> bool:
+        """终止本地执行的任务"""
         if execution_id in self.local_processes:
             try:
                 process = self.local_processes[execution_id]
-                process.terminate()
+                # Windows 使用 taskkill 终止进程树
+                subprocess.run(
+                    ["taskkill", "/F", "/T", "/PID", str(process.pid)],
+                    capture_output=True,
+                    timeout=10
+                )
                 try:
                     process.wait(timeout=5)
                 except subprocess.TimeoutExpired:
-                    process.kill()
+                    pass
                 self.unregister_execution(execution_id)
                 return True
             except Exception as e:
                 print(f"[TaskTracker] Error terminating local task {execution_id}: {e}")
                 return False
         return False
-    
-    def get_agent_for_execution(self, execution_id: str) -> Optional[str]:
-        execution = self.running_tasks.get(execution_id)
-        if execution and execution.get("type") == "remote":
-            return execution.get("agent_id")
-        return None
 
 
 task_tracker = TaskExecutionTracker()
