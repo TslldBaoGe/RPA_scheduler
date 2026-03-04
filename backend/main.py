@@ -71,12 +71,17 @@ async def websocket_agent_endpoint(websocket: WebSocket):
                     
                     status = result.get("status", "unknown")
                     
+                    # 构建输出
+                    stdout = result.get("stdout", "")
+                    stderr = result.get("stderr", "")
+                    returncode = result.get("returncode", "N/A")
+                    
                     if status == "terminated":
-                        output = f"[任务已被用户终止]\n\nReturn code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
+                        output = f"Return code: {returncode}\n\nStdout:\n{stdout}\n\nStderr:\n{stderr}\n\n[系统] 任务已被用户终止"
                     elif status == "error" and result.get("error"):
-                        output = f"Error: {result.get('error')}\n\nReturn code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
+                        output = f"Error: {result.get('error')}\n\nReturn code: {returncode}\n\nStdout:\n{stdout}\n\nStderr:\n{stderr}"
                     else:
-                        output = f"Return code: {result.get('returncode', 'N/A')}\n\nStdout:\n{result.get('stdout', '')}\n\nStderr:\n{result.get('stderr', '')}"
+                        output = f"Return code: {returncode}\n\nStdout:\n{stdout}\n\nStderr:\n{stderr}"
                     
                     if execution_id:
                         update_execution_record(

@@ -206,15 +206,7 @@ async def terminate_execution(execution_id: str):
                 "execution_id": execution_id
             })
             
-            # 更新历史记录
-            history = load_history()
-            for record in history:
-                if record["id"] == execution_id:
-                    record["status"] = "terminated"
-                    record["output"] = f"{record.get('output', '')}\n\n[系统] 任务已被用户终止"
-                    break
-            save_history(history)
-            
+            # 不在这里更新历史记录，等 Agent 返回结果时更新
             task_tracker.unregister_execution(execution_id)
             return {"message": f"已向 Agent {agent_id} 发送终止命令", "executionId": execution_id}
         else:
