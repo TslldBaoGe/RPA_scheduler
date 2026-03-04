@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { CronExpressionParser } from 'cron-parser'
-import { ElButton, ElInput, ElTable, ElTableColumn, ElForm, ElFormItem, ElDialog, ElMessage, ElTag, ElTooltip, ElIcon, ElPagination } from 'element-plus'
+import { ElButton, ElInput, ElTable, ElTableColumn, ElForm, ElFormItem, ElDialog, ElMessage, ElMessageBox, ElTag, ElTooltip, ElIcon, ElPagination } from 'element-plus'
 import { WarningFilled } from '@element-plus/icons-vue'
 
 // API 基础 URL - 生产环境
@@ -112,6 +112,19 @@ const api = {
       return await response.json()
     } catch (error) {
       console.error('在Agent上执行任务失败:', error)
+      throw error
+    }
+  },
+  
+  // 终止执行中的任务
+  async terminateExecution(executionId) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/executions/${executionId}/terminate`, {
+        method: 'POST'
+      })
+      return await response.json()
+    } catch (error) {
+      console.error('终止任务失败:', error)
       throw error
     }
   }
@@ -320,6 +333,32 @@ const manualExecuteTask = async (task) => {
     }, 2000)
   } catch (error) {
     ElMessage.error(`任务 ${task.name} 执行失败: ${error.message}`)
+  }
+}
+
+// 终止执行中的任务
+const terminateExecution = async (row) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要终止任务 "${row.taskName}" 吗？`,
+      '确认终止',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }
+    )
+    
+    await api.terminateExecution(row.id)
+    ElMessage.success(`任务 ${row.taskName} 已终止`)
+    
+    // 立即刷新
+    await loadExecutionHistory()
+    await loadTasks()
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error(`终止任务失败: ${error.message || error}`)
+    }
   }
 }
 
@@ -535,8 +574,8 @@ onUnmounted(() => {
       </el-table-column>
       <el-table-column label="状态" width="100">
         <template #default="{ row }">
-          <el-tag :type="row.status === 'success' ? 'success' : row.status === 'running' ? 'warning' : 'danger'">
-            {{ row.status === 'success' ? '成功' : row.status === 'running' ? '执行中' : '失败' }}
+          <el-tag :type="row.status === 'success' ? 'success' : row.status === 'running' ? 'warning' : row.status === 'terminated' ? 'info' : 'danger'">
+            {{ row.status === 'success' ? '成功' : row.status === 'running' ? '执行中' : row.status === 'terminated' ? '已终止' : '失败' }}
           </el-tag>
         </template>
       </el-table-column>
@@ -545,6 +584,17 @@ onUnmounted(() => {
           <el-tooltip :content="row.output" placement="top" :disabled="!row.output || row.output.length <= 100">
             <span class="ellipsis-text">{{ row.output ? (row.output.length > 100 ? row.output.substring(0, 100) + '...' : row.output) : '-' }}</span>
           </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="100">
+        <template #default="{ row }">
+          <el-button 
+            v-if="row.status === 'running'" 
+            size="small" 
+            type="danger" 
+            @click="terminateExecution(row)"
+          >终止</el-button>
+          <span v-else style="color: #999; font-size: 12px;">-</span>
         </template>
       </el-table-column>
     </el-table>

@@ -1,10 +1,12 @@
 import uuid
 import subprocess
 import re
+import os
 from datetime import datetime
 from config import CMD_TIMEOUT, MAX_HISTORY_SIZE
 from storage import load_history, save_history
 from connection_manager import manager
+from task_tracker import task_tracker
 
 
 def format_duration(seconds: float) -> str:
@@ -90,24 +92,41 @@ def execute_task_local(task: dict) -> dict:
     start_time = datetime.now()
     timeout = task.get("timeout", CMD_TIMEOUT)
     
+    process = None
     try:
         work_dir = _extract_work_dir(task["cmd"])
         
-        result = subprocess.run(
+        # 使用 Popen 以支持终止
+        process = subprocess.Popen(
             task["cmd"],
             shell=True,
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
-            timeout=timeout,
             cwd=work_dir
         )
+        
+        # 注册到跟踪器
+        task_tracker.register_local_execution(execution_id, process, task)
+        
+        # 等待完成或超时
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+            returncode = process.returncode
+        except subprocess.TimeoutExpired:
+            process.kill()
+            stdout, stderr = process.communicate()
+            returncode = -1
+        
+        # 从跟踪器移除
+        task_tracker.unregister_execution(execution_id)
         
         end_time = datetime.now()
         duration_seconds = (end_time - start_time).total_seconds()
         duration_str = format_duration(duration_seconds)
         
-        output = _build_output(task, work_dir, end_time, result.returncode, result.stdout, result.stderr)
-        status = "success" if result.returncode == 0 else "error"
+        output = _build_output(task, work_dir, end_time, returncode, stdout, stderr)
+        status = "success" if returncode == 0 else "error"
         
         update_execution_record(execution_id, status, output, duration_str)
         print(f"[DEBUG] Updated execution record: {execution_id}, status: {status}")
@@ -123,26 +142,10 @@ def execute_task_local(task: dict) -> dict:
             "duration": duration_str
         }
         
-    except subprocess.TimeoutExpired:
-        end_time = datetime.now()
-        duration_seconds = (end_time - start_time).total_seconds()
-        duration_str = format_duration(duration_seconds)
-        
-        output = _build_error_output(task, end_time, f"命令执行超时（超过 {timeout} 秒）")
-        update_execution_record(execution_id, "error", output, duration_str)
-        
-        return {
-            "id": execution_id,
-            "taskId": task["id"],
-            "taskName": task["name"],
-            "cmd": task["cmd"],
-            "executionTime": end_time.isoformat(),
-            "status": "error",
-            "output": output,
-            "duration": duration_str
-        }
-        
     except Exception as e:
+        if process:
+            task_tracker.unregister_execution(execution_id)
+        
         end_time = datetime.now()
         duration_seconds = (end_time - start_time).total_seconds()
         duration_str = format_duration(duration_seconds)
@@ -165,6 +168,9 @@ def execute_task_local(task: dict) -> dict:
 async def send_task_to_agent(task: dict, agent_id: str, execution_id: str):
     if not manager.is_agent_online(agent_id):
         raise Exception(f"Agent {agent_id} 不在线")
+    
+    # 注册到跟踪器
+    task_tracker.register_remote_execution(execution_id, agent_id, task)
     
     await manager.send_command(agent_id, {
         "type": "execute",
